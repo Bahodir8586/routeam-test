@@ -19,11 +19,13 @@ function App() {
   const [showSecondForm, setShowSecondForm] = useState(false);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(strings.errorMessageDefault);
 
   const submitFile = useCallback((file) => {
     setIsLoading(true);
     if (!file.type.match("video.*")) {
       setShowErrorMessage(true);
+      setErrorMessage(strings.incorrectFile);
       initialState();
     } else {
       const formData = new FormData();
@@ -47,11 +49,13 @@ function App() {
             })
             .catch((error) => {
               setShowErrorMessage(true);
+              setErrorMessage(strings.errorMessageDefault);
               initialState();
             });
         })
         .catch((error) => {
           setShowErrorMessage(true);
+          setErrorMessage(strings.errorMessageDefault);
           initialState();
         });
     }
@@ -72,6 +76,9 @@ function App() {
         setIsLoading(false);
       })
       .catch((error) => {
+        if (error.response.status == 404) {
+          setErrorMessage(strings.incorrectCode);
+        }
         setShowErrorMessage(true);
         initialState();
       });
@@ -108,7 +115,7 @@ function App() {
       show={showErrorMessage}
       modalClosed={() => setShowErrorMessage(false)}
     >
-      {strings.errorMessage}
+      {errorMessage}
     </Modal>
   );
 
