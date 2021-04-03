@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./VideoPlayer.module.css";
 
-const VideoPlayer = (props) => {
+const VideoPlayer = ({ closePlayer, src }) => {
   return (
     <div className={styles.video}>
-      <button onClick={props.closePlayer}>Close</button>
-      <video controls autoPlay src={props.src} width="800" height="450" />
+      <button onClick={closePlayer}>Close</button>
+      <video controls autoPlay src={src} width="800" height="450" />
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from "react";
 import axios from "./axios";
 
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
-import Form from "./components/Form/Form";
-import Spinner from "./components/Spinner/Spinner";
-import Modal from "./components/Modal/Modal";
+import VideoPlayer from "./components/VideoPlayer";
+import Form from "./components/Form";
+import Spinner from "./components/Spinner";
+import Modal from "./components/Modal";
 
 import "./App.css";
 import strings from "./constants/strings";
@@ -76,7 +76,7 @@ function App() {
         setIsLoading(false);
       })
       .catch((error) => {
-        if (error.response.status == 404) {
+        if (error.response.status === 404) {
           setErrorMessage(strings.incorrectCode);
         }
         setShowErrorMessage(true);

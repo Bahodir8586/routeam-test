@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Form.module.css";
 import strings from "../../constants/strings";
 
-const Form = (props) => {
+const Form = ({ inputType, label, onSubmit }) => {
   const [inputValue, setinputValue] = useState("");
   const [disabled, setDisabled] = useState(true);
 
@@ -26,12 +26,12 @@ const Form = (props) => {
     },
   ];
   let classes = classNames[0];
-  if (props.inputType === "file") {
+  if (inputType === "file") {
     classes = classNames[1];
   }
 
   const inputHandler = (e) => {
-    if (props.inputType === "file") {
+    if (inputType === "file") {
       setinputValue(e.target.files[0]);
       return;
     }
@@ -41,16 +41,16 @@ const Form = (props) => {
     if (!inputValue) {
       return;
     }
-    props.onSubmit(inputValue);
+    onSubmit(inputValue);
   };
   return (
     <div className={styles.form}>
       <div>
         <label htmlFor="input" className={classes.label}>
-          {props.label}
+          {label}
         </label>
       </div>
-      {props.inputType === "file" && (
+      {inputType === "file" && (
         <div>
           <span>{inputValue.name}</span>
         </div>
@@ -58,7 +58,7 @@ const Form = (props) => {
 
       <div>
         <input
-          type={props.inputType}
+          type={inputType}
           id="input"
           onChange={inputHandler}
           className={classes.input}
